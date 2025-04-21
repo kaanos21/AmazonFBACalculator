@@ -1,0 +1,118 @@
+﻿@model AmazonFbaUI.Dtos.UsaToAudDto.ProductDetailDto
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Product Detail - @Model.Asin</h3>
+        </div>
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="border rounded p-3">
+                        <strong>FBA Fee:</strong> $@Model.FbaFee
+                    </div>
+                    <div class="border rounded p-3 mt-2">
+                        <strong>FBA Sales Fee:</strong> $@Model.FbaSalesFee
+                    </div>
+                    <div class="border rounded p-3 mt-2">
+                        <strong>Shipment Price:</strong> $@Model.ShipmentPrice
+                    </div>
+                    <div class="border rounded p-3 mt-2">
+                        <strong>Quantity:</strong> @Model.Quantity
+                    </div>
+                    <div class="border rounded p-3 mt-2">
+                        <strong>Weight (kg):</strong> @Model.WeightKg
+                    </div>
+                    <div class="border rounded p-3 mt-2">
+                        <strong>Surcharge:</strong> $@Model.Surcharge
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded p-3">
+                        <strong>USA Price:</strong> $@Model.UsaPrice
+                    </div>
+                    <div class="border rounded p-3 mt-2">
+                        <strong>AU Price:</strong> $@Model.AuPrice
+                    </div>
+                    <div class="border rounded p-3 mt-2">
+                        <strong>Earn AUD:</strong> $@Model.EarnAud
+                    </div>
+                    <div class="border rounded p-3 mt-2">
+                        <strong>Earn USD:</strong> $@Model.EarnUsd
+                    </div>
+                    <div class="border rounded p-3 mt-2">
+                        <strong>ROI:</strong> %@Model.Roi
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <h5 class="text-secondary">Analysis</h5>
+                <div class="p-4 bg-light border rounded">
+                    <p class="mb-0" style="white-space:pre-wrap;">@Model.Analysis</p>
+                </div>
+            </div>
+
+            <!-- Button to trigger the modal -->
+            <div class="mt-4 text-end">
+                <button type="button" class="btn btn-info" id="btnShowAnalysis">Show Analysis</button>
+            </div>
+        </div>
+
+        <div class="card-footer text-end">
+            <a href="@Url.Action("ProductQuickList")" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="analysisModal" tabindex="-1" aria-labelledby="analysisModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="analysisModalLabel">Ürün Analizi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="analysisContent"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Butona tıklandığında AJAX isteği gönder
+        $('#btnShowAnalysis').on('click', function () {
+            var productId = @Model.Id;  // Product ID'yi alıyoruz
+
+            // AJAX isteği gönder
+            $.ajax({
+                url: '@Url.Action("AlProductAnalysis", "ProductUsaToAud")', // URL doğru mu?
+                type: 'GET',
+                data: { id: productId }, // Product ID'yi parametre olarak gönderiyoruz
+                success: function (data) {
+                    if (data.success) {
+                        // Modal'ı açıyoruz ve veriyi içerisine yerleştiriyoruz
+                        $('#analysisContent').text(data.analysis);
+                        $('#analysisModal').modal('show');
+                    } else {
+                        // Hata mesajı göster
+                        alert(data.message || "Bir hata oluştu.");
+                    }
+                },
+                error: function () {
+                    // AJAX hatası durumunda kullanıcıyı bilgilendir
+                    alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+                }
+            });
+        });
+    });
+</script>
+
