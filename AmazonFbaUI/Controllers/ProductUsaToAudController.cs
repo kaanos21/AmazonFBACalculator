@@ -78,27 +78,25 @@ namespace AmazonFbaUI.Controllers
 
             return View("ProductQuickList");
         }
-
+        [HttpGet]
         public async Task<IActionResult> AlProductAnalysis(int id)
         {
             var client = _httpClientFactory.CreateClient("ApiClient");
-
-            // API'ye GET isteği gönderiyoruz
             var response = await client.GetAsync($"UsaToAuProduct/AlAnalysis?id={id}");
 
             if (response.IsSuccessStatusCode)
             {
-                // API'den dönen veriyi alıyoruz
                 var analysis = await response.Content.ReadAsStringAsync();
-
-                // JSON formatında dönecek veriyi view'a taşıyoruz
-                return Json(new { success = true, analysis = analysis });
+                ViewBag.Analysis = analysis;
             }
             else
             {
-                return Json(new { success = false, message = "Analysis verisi alınırken bir hata oluştu." });
+                ViewBag.Analysis = "Veri alınırken hata oluştu.";
             }
+
+            return View();
         }
+
 
 
 
