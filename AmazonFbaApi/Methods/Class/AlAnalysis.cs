@@ -34,6 +34,7 @@ namespace AmazonFbaApi.Methods.Class
                 Analysis = value.Analysis,
             };
 
+
             double usdToAudRate = (double)UsdAudCurrency.UsdToAud / 1000;
 
             double UsaPrice= productAlAnalysisDto.UsaPrice*usdToAudRate;
