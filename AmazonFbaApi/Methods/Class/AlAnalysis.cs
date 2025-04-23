@@ -18,7 +18,7 @@ namespace AmazonFbaApi.Methods.Class
 
         public async Task<string> UsaToAudAlAnalysis(int id)
         {
-            var apiKey = "Your Api Key";
+            var apiKey = "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";
 
             using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
