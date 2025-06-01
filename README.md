@@ -81,3 +81,4 @@ Notlar analiz edilerek ürünün:
 
 - **API Katmanı**: Verilerin işlendiği ve hesaplamaların yapıldığı kısım.  
 - **UI Katmanı**: Kullanıcı arayüzü, API’den gelen verileri tüketerek sade ve kullanıcı dostu bir ekran sunar.
+
