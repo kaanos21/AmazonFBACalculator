@@ -36,6 +36,7 @@ Based on notes analysis, the application offers suggestions on:
 
 ### 🌐 Layered Architecture
 
+
 - **API Layer**: Processes data and performs calculations.  
 - **UI Layer**: User interface that consumes API data to present a clean and user-friendly screen.
 
